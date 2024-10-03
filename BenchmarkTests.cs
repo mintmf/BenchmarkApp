@@ -4,7 +4,7 @@ namespace BenchmarkApp
 {
     public class BenchmarkTests
     {
-        [Benchmark]
+        //[Benchmark]
         public List<int> BenchmarkTest1()
         {
             var intList = new List<int>();
@@ -17,7 +17,7 @@ namespace BenchmarkApp
             return intList;
         }
 
-        [Benchmark]
+        //[Benchmark]
         public List<int> BenchmarkTest2()
         {
             var intList = new List<int>();
@@ -30,7 +30,7 @@ namespace BenchmarkApp
             return intList;
         }
 
-        [Benchmark]
+        //[Benchmark]
         public List<int> BenchmarkTest3()
         {
             var intList = new List<int>();
@@ -43,7 +43,7 @@ namespace BenchmarkApp
             return intList;
         }
 
-        [Benchmark]
+        //[Benchmark]
         public List<int> BenchmarkTest4()
         {
             var intList = new List<int>();
@@ -54,6 +54,38 @@ namespace BenchmarkApp
             }
 
             return intList;
+        }
+
+        [Benchmark]
+        public int GetReverseWordCount()
+        {
+            var text = File.ReadAllText("world2.txt");
+            var words = text.Split(' ');
+            var result = words.Distinct().Count(word => words
+                .Any(anotherWord => anotherWord == new String(word.ToCharArray().Reverse().ToArray())));
+
+            return result;
+        }
+
+        [Benchmark]
+        public int GetReverseWordCountNew()
+        {
+            var text = File.ReadAllText("world2.txt");
+            var words = text.Split(' ').ToList().Distinct();
+            var reverseWordDictionary = words.ToDictionary(w => w, w => new String(w.ToCharArray().Reverse().ToArray()));
+
+            var wordsCount = 0;
+            var outString = String.Empty;
+
+            foreach(var word in words)
+            {
+                if (reverseWordDictionary.TryGetValue(new String(word.ToCharArray().Reverse().ToArray()), out outString))
+                {
+                    wordsCount++;
+                }
+            }
+
+            return wordsCount;
         }
     }
 }

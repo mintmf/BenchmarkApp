@@ -1,6 +1,14 @@
 ﻿using BenchmarkApp;
+using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Running;
 
-Console.WriteLine("Hello, World!");
-var result = BenchmarkRunner.Run<BenchmarkTests>();
+FileStream filestream = new FileStream("out.txt", FileMode.Create);
+var streamwriter = new StreamWriter(filestream);
+streamwriter.AutoFlush = true;
+Console.SetOut(streamwriter);
+Console.SetError(streamwriter);
+
+var config = DefaultConfig.Instance;
+var summary = BenchmarkRunner.Run<BenchmarkTests>(config);
+
 Console.ReadLine();

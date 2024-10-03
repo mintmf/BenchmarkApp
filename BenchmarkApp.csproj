@@ -11,4 +11,13 @@
     <PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="world2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="worldAndPeace.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
